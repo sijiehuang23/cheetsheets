@@ -39,39 +39,25 @@ To enable calling Julia from Python, follow these steps:
    - Install `PyJulia`:
      ```bash
      pip install julia
-     ```Install PyJulia:
-     pip install julia
-     Configure PyJulia in Python by entering the Python REPL:
-     import julia
-     julia.install()
-     Test the setup by running:
-     from julia.api import Julia
-     jl = Julia(compiled_modules=False)  # Avoids issues with static linking
-     from julia import Main
-     print(Main.eval("2 + 2"))  # Should output "4"
-   - Configure `PyJulia` in Python by entering the Python REPL:
+     ```
+   - Configure PyJulia in Python by entering the Python REPL:
      ```python
      import julia
      julia.install()
      ```
    - Test the setup by running:
      ```python
+     from julia import Main
+     print(Main.eval("2 + 2"))  # Should output "4"
+     ```
+      **Note**: If you see a message about a statically linked Python interpreter, use `compiled_modules=False` when initializing `Julia` as shown above, or alternatively, use `python-jl`:
+      ```bash
+      $ python-jl PATH/TO/YOUR/SCRIPT.py
+      ```
+   - Overall, one should always do
+     ```python
      from julia.api import Julia
      jl = Julia(compiled_modules=False)  # Avoids issues with static linking
      from julia import Main
      print(Main.eval("2 + 2"))  # Should output "4"
      ```
-
-   **Note**: If you see a message about a statically linked Python interpreter, use `compiled_modules=False` when initializing `Julia` as shown above, or alternatively, use `python-jl`:
-   ```bash
-   $ python-jl PATH/TO/YOUR/SCRIPT.py
-   ```
-
-   **Reminder**: Each time you start a new Python session or switch directories, repeat the following commands to ensure consistent configuration:
-   ```python
-   import julia
-   julia.install()
-   from julia.api import Julia
-   jl = Julia(compiled_modules=False)
-   from julia import Main
-   ```
